@@ -24,7 +24,7 @@ def calculate_border_velocity(u, h):
     return hn
 
 def create_geometry_evolution():
-    """Gera evolucao realistica da geometria com padrao de cruz"""
+    
     theta = np.linspace(0, 2*np.pi, 100)
     # Geometria inicial (quadrado suavizado)
     initial = 0.4 * (np.abs(np.cos(theta)) + np.abs(np.sin(theta))) / (np.abs(np.cos(theta)) + np.abs(np.sin(theta)) + 1e-10)
@@ -43,19 +43,19 @@ hn_border = calculate_border_velocity(u_sol, h)
 # Visualização
 fig, axes = plt.subplots(1,3,figsize=(15,5))
 
-# Subplot 1: Solução u(x,y)
+#  Solução u(x,y)
 im1 = axes[0].contourf(X,Y,u_sol,40,cmap='viridis')
 axes[0].set_title('Solução $u(x,y)$'); axes[0].set_xlabel('$x$'); axes[0].set_ylabel('$y$')
 plt.colorbar(im1, ax=axes[0])
 
-# Subplot 2: Campo vetorial
+#  Campo vetorial
 skip = 2
 quiver = axes[1].quiver(X[::skip,::skip],Y[::skip,::skip],gxn[::skip,::skip],gyn[::skip,::skip],
                        gm[::skip,::skip],cmap='plasma',scale=25,width=0.005,angles='xy')
 axes[1].set_title('Campo vetorial $\\nabla u$'); axes[1].set_xlabel('$x$'); axes[1].set_ylabel('$y$')
 plt.colorbar(quiver, ax=axes[1])
 
-# Subplot 3: Evolução da geometria CORRIGIDA
+#  Evolução da geometria modificada
 theta, init_geom, opt_geom = create_geometry_evolution()
 ax_polar = fig.add_subplot(133, polar=True)
 ax_polar.plot(theta, init_geom, 'k--', linewidth=2, label='Contorno inicial ($\\Omega_0$)')
